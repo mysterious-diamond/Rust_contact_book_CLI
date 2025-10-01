@@ -14,18 +14,12 @@ struct Contact {
 	number: String,
 }
 
-impl Contact {
-	pub fn new(name: String, number: String) -> Contact {
-		Contact { name, number }
-	}
-}
-
 fn help() {
 	println!("Default commands :");
 	println!("ls => Lists all contacts");
 	println!();
-	println!("add <args> => Adds a contact :");
-	println!("\targs : name of contact, number");
+	println!("add <args> => Adds/Updates a contact :");
+	println!("\targs : name of new/existing contact, number");
 	println!("\te.g. : add Cedric 067676767");
 	println!();
 	println!("del <arg> => Deletes a contact :");
@@ -35,8 +29,15 @@ fn help() {
 }
 
 fn add(contacts: &mut Vec<Contact>, name: String, number: String) {
-	let contact = Contact::new(name, number);
-	contacts.push(contact);
+	for contact in contacts.iter_mut() {
+		if contact.name == name {
+			contact.number = number;
+			println!("Updated contact {name}'s number");
+			return;
+		}
+	}
+	let new_contact = Contact {name, number};
+	contacts.push(new_contact);
 	println!("Added contact to contact book");
 }
 
@@ -51,8 +52,14 @@ fn list(contacts: &Vec<Contact>) {
 }
 
 fn delete(contacts: &mut Vec<Contact>, name: String) {
-	contacts.retain(|contact| contact.name != name);
-	println!("Removed contact {name} from contact book");	
+	for contact in contacts.iter() {
+		if contact.name == name {
+			contacts.retain(|contact| contact.name != name);
+			println!("Removed contact {name} from contact book");
+			return;
+		}
+	}
+	println!("No contact named {name}");	
 }
 
 fn lexer(command: &str) -> Result<Vec<Token>, Box<dyn Error>> {
