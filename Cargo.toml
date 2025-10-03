@@ -6,3 +6,5 @@ edition = "2024"
 [dependencies]
 mysql = "26.0.1"
 dotenvy = "0.15"
+bcrypt = "0.17"
+colored = "2"
