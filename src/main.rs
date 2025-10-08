@@ -302,7 +302,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 				println!("{}", "Login succesful.".green());
 				id
 			},
-			Err(msg) => panic!("{} {msg}", "Login unsuccesful,".red())
+			Err(msg) => panic!("{} {}", "Login unsuccesful,".red(), msg.to_string().red())
 		};
 	}
 	else {
@@ -311,7 +311,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 				println!("{}", "Signup succesful, account has been created.".green());
 				id
 			},
-			Err(msg) => panic!("{} {msg}", "Signup unsuccesful,".red())
+			Err(msg) => panic!("{} {}", "Signup unsuccesful,".red(), msg.to_string().red())
 		};
 	}
 
